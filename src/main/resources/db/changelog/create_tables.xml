@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="create_initial_tables" author="sharshatov">
+        <createTable tableName="storage">
+            <column autoIncrement="true" name="article" type="bigint">
+                <constraints nullable="false" primaryKey="true" />
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="count" type="integer">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createTable tableName="department">
+            <column autoIncrement="true" name="department_id" type="bigint">
+                <constraints nullable="false" primaryKey="true" />
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createTable tableName="employee">
+            <column autoIncrement="true" name="employee_id" type="bigint">
+                <constraints nullable="false" primaryKey="true" />
+            </column>
+            <column name="first_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="middle_name" type="varchar(255)" />
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="birth_date" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="hire_date" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="department_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_department_id" references="department(department_id)" deleteCascade="true" />
+            </column>
+        </createTable>
+
+        <createTable tableName="provider">
+            <column autoIncrement="true" name="provider_id" type="bigint">
+                <constraints nullable="false" primaryKey="true" />
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="address" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createTable tableName="purchase_order">
+            <column autoIncrement="true" name="order_number" type="bigint">
+                <constraints nullable="false" primaryKey="true" />
+            </column>
+            <column name="material" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="count" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="price" type="money">
+                <constraints nullable="false" />
+            </column>
+            <column name="order_details" type="varchar(255)" />
+            <column name="provider_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_provider_id" references="provider(provider_id)" deleteCascade="true" />
+            </column>
+            <column name="employee_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_employee_id" references="employee(employee_id)" deleteCascade="true" />
+            </column>
+        </createTable>
+
+        <createTable tableName="storage_operation">
+            <column autoIncrement="true" name="operation_id" type="bigint">
+                <constraints nullable="false" primaryKey="true" />
+            </column>
+            <column name="date" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="article" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_article" references="storage(article)" deleteCascade="true" />
+            </column>
+            <column name="order_number" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_order_number" references="purchase_order(order_number)" deleteCascade="true" />
+            </column>
+        </createTable>
+
+        <createTable tableName="status">
+            <column autoIncrement="true" name="status_id" type="bigint">
+                <constraints nullable="false" primaryKey="true" />
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+
+        <createTable tableName="contract">
+            <column autoIncrement="true" name="contract_number" type="bigint">
+                <constraints nullable="false" primaryKey="true" />
+            </column>
+            <column name="status_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_status_id" references="status(status_id)" deleteCascade="true" />
+            </column>
+            <column name="provider_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_provider_id" references="provider(provider_id)" deleteCascade="true" />
+            </column>
+        </createTable>
+
+        <createTable tableName="payment">
+            <column autoIncrement="true" name="payment_id" type="bigint">
+                <constraints nullable="false" primaryKey="true" />
+            </column>
+            <column name="payment_sum" type="money">
+                <constraints nullable="false" />
+            </column>
+            <column name="date" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="contract_number" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_contract_number" references="contract(contract_number)" deleteCascade="true"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+</databaseChangeLog>
