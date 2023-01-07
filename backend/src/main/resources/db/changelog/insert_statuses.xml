@@ -1,0 +1,16 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="insert_statuses" author="sharshatov">
+        <insert tableName="status">
+            <column name="name" value="Создано"/>
+        </insert>
+        <insert tableName="status">
+            <column name="name" value="Оплачено"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

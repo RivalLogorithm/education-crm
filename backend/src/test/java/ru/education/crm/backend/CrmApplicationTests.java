@@ -1,4 +1,4 @@
-package ru.education.crm;
+package ru.education.crm.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
