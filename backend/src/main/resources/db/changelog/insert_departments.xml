@@ -10,6 +10,12 @@
         <insert tableName="department">
             <column name="name" value="Отдел закупок"/>
         </insert>
+        <insert tableName="department">
+            <column name="name" value="Бухгалтерия"/>
+        </insert>
+        <insert tableName="department">
+            <column name="name" value="Склад"/>
+        </insert>
     </changeSet>
 
 </databaseChangeLog>

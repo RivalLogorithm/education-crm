@@ -141,4 +141,12 @@
 
     </changeSet>
 
+    <changeSet id="add_password" author="sharshatov">
+        <addColumn tableName="employee">
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

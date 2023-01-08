@@ -17,6 +17,8 @@ public class EmployeeDTO {
 
     private String email;
 
+    private String password;
+
     private LocalDate birthDate;
 
     private long department;

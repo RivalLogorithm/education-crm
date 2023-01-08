@@ -1,5 +1,6 @@
 package ru.education.crm.backend.controller;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,8 @@ public class EmployeeController {
 
     @PostMapping("/register")
     public ResponseEntity<Employee> registerEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        String hashPassword = BCrypt.withDefaults().hashToString(12, employeeDTO.getPassword().toCharArray());
+        employeeDTO.setPassword(hashPassword);
         Employee employee = new Employee(employeeDTO);
         employee.setHireDate(LocalDate.now());
 
@@ -34,10 +37,30 @@ public class EmployeeController {
 
         if (department.isPresent()) {
             employee.setDepartment(department.get());
-            employee = employeeRepository.save(employee);
+            try {
+                employee = employeeRepository.save(employee);
+            } catch (Exception e) {
+                log.error(e.getMessage());
+            }
+            log.info("Пользователь зарегистрирован");
             return new ResponseEntity<>(employee, HttpStatus.CREATED);
         } else {
+            log.error("Ошибка при регистрации");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<Employee> loginEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        Optional<Employee> employee = employeeRepository.findByEmail(employeeDTO.getEmail());
+
+        if (employee.isPresent()) {
+            BCrypt.Result result = BCrypt.verifyer().verify(employeeDTO.getPassword().toCharArray(), employee.get().getPassword());
+            if (result.verified) {
+                return new ResponseEntity<>(employee.get(), HttpStatus.OK);
+            }
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

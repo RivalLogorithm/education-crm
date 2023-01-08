@@ -30,6 +30,9 @@ public class Employee {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
@@ -45,6 +48,7 @@ public class Employee {
         this.lastName = employeeDTO.getLastName();
         this.middleName = employeeDTO.getMiddleName();
         this.email = employeeDTO.getEmail();
+        this.password = employeeDTO.getPassword();
         this.birthDate = employeeDTO.getBirthDate();
     }
 
