@@ -11,6 +11,7 @@ import {OrderDetailsPage} from "./pages/OrderDetailsPage";
 import {PaymentPage} from "./pages/PaymentPage";
 import {StorageOrdersPage} from "./pages/StorageOrdersPage";
 import {StorageDetailsPage} from "./pages/StorageDetailsPage";
+import {AccountingPage} from "./pages/AccountingPage";
 
 export const useRoutes = department => {
     switch (department) {
@@ -31,6 +32,7 @@ export const useRoutes = department => {
                     <Route path="/" exact element={<HomePage/>}/>
                     <Route path="/payment" exact element={<AccountantOrdersPage/>}/>
                     <Route path="/payment/:orderNumber" exact element={<PaymentPage/>}/>
+                    <Route path="/accounting" exact element={<AccountingPage/>}/>
                     <Route path="*" exact element={<Navigate to="/"/>}/>
                 </Routes>
             )

@@ -15,11 +15,22 @@ export const PaymentPage = () => {
 
     const payHandler = () => {
         axios.put("/api/payment/pay/" + payment.contractNumber)
+            .catch(err => console.log(err))
+
+        const accountingEntity = {
+            debit: "60.1", debitName: "Расчеты с покупателями и заказчиками авансы полученные",
+            credit: "51", creditName: "Расчетные счета",
+            value: payment.price, additionalValue: payment.nds,
+            operation: "Оплата ТМЦ (" + payment.provider + ")"
+        }
+
+        axios.post("/api/accounting/new_entity", accountingEntity)
             .then(() => {
                 window.alert("Договор успешно оплачен")
-                navigate("/payment")
             })
             .catch(err => console.log(err))
+
+        navigate("/payment")
     }
 
     return (
@@ -51,7 +62,29 @@ export const PaymentPage = () => {
                             className="black-input"
                         />
                     </div>
-                    <label className="white-text">Стоимость в рублях</label>
+                    <label className="white-text">Стоимость</label>
+                    <div className="input-field">
+                        <input
+                            disabled
+                            value={payment.price}
+                            id="price"
+                            type="text"
+                            name="price"
+                            className="black-input"
+                        />
+                    </div>
+                    <label className="white-text">Номер договора</label>
+                    <div className="input-field">
+                        <input
+                            disabled
+                            value={payment.nds}
+                            id="nds"
+                            type="text"
+                            name="nds"
+                            className="black-input"
+                        />
+                    </div>
+                    <label className="white-text">Итого</label>
                     <div className="input-field">
                         <input
                             disabled

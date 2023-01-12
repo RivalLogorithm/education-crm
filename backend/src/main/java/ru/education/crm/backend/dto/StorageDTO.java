@@ -20,4 +20,8 @@ public class StorageDTO {
     private String provider;
 
     private String details;
+
+    private double price;
+
+    private double nds;
 }

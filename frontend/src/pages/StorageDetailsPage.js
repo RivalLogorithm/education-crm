@@ -16,14 +16,26 @@ export const StorageDetailsPage = () => {
 
     const approveHandler = () => {
         axios.put("/api/storage/approve/" + orderNumber)
+
+        const accountingEntity = {
+            debit: "10", debitName: "Материалы",
+            credit: "60.1", creditName: "Расчеты с поставщиками и подрядчиками авансы выданные",
+            value: order.price, additionalValue: order.nds,
+            operation: "Поступление ТМЦ (" + order.provider + ")"
+        }
+
+        axios.post("/api/accounting/new_entity", accountingEntity)
+            .catch(err => console.log(err))
+
+        accountingEntity.debit = "19"
+        accountingEntity.debitName = "Налог на добавленную стоимость по приобретенным ценностям"
+
+        axios.post("/api/accounting/new_entity", accountingEntity)
             .then(() => {
                 window.alert("Заказ проверен и подтвержден")
                 navigate("/storage")
             })
-            .catch(err => {
-                window.alert(err)
-                console.log(err)
-            })
+            .catch(err => console.log(err))
     }
 
     return (

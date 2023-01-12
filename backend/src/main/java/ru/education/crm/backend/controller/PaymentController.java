@@ -4,16 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.education.crm.backend.dto.AccountingDTO;
 import ru.education.crm.backend.dto.OrderDTO;
-import ru.education.crm.backend.entity.PurchaseOrder;
+import ru.education.crm.backend.entity.*;
 import ru.education.crm.backend.enums.ContractStatus;
 import ru.education.crm.backend.dto.PayContractDTO;
-import ru.education.crm.backend.entity.Contract;
-import ru.education.crm.backend.entity.Payment;
-import ru.education.crm.backend.repository.ContractRepository;
-import ru.education.crm.backend.repository.PaymentRepository;
-import ru.education.crm.backend.repository.PurchaseOrderRepository;
-import ru.education.crm.backend.repository.StatusRepository;
+import ru.education.crm.backend.repository.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/payment")
-public class AccountantController {
+public class PaymentController {
 
     @Autowired
     private PurchaseOrderRepository purchaseOrderRepository;
@@ -34,6 +30,12 @@ public class AccountantController {
 
     @Autowired
     private StatusRepository statusRepository;
+
+    @Autowired
+    private InvoiceRepository invoiceRepository;
+
+    @Autowired
+    private AccountingRepository accountingRepository;
 
     @GetMapping("/get_orders")
     public ResponseEntity<List<OrderDTO>> getOrders() {
@@ -72,8 +74,18 @@ public class AccountantController {
         if (purchaseOrder.isPresent()) {
             response.setOrderNumber(orderNumber);
             response.setContractNumber(purchaseOrder.get().getContract().getContractNumber());
+            response.setProvider(purchaseOrder.get().getProvider().getName());
             Optional<Payment> payment = paymentRepository.findByContract(purchaseOrder.get().getContract());
-            payment.ifPresent(value -> response.setPaymentSum(value.getPaymentSum()));
+            payment.ifPresent(value -> {
+                response.setPaymentSum(value.getPaymentSum());
+                if (purchaseOrder.get().getMaterial().equals("Материал 2") || purchaseOrder.get().getMaterial().equals("Материал 3")) {
+                    response.setNds(value.getPaymentSum() / 1.2 * 0.2);
+                    response.setPrice(value.getPaymentSum() / 1.2);
+                } else {
+                    response.setNds(0);
+                    response.setPrice(value.getPaymentSum());
+                }
+            });
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

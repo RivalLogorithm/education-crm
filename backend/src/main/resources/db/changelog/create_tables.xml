@@ -164,4 +164,26 @@
             </column>
         </addColumn>
     </changeSet>
+    
+    <changeSet id="add_accounting" author="sharshatov">
+        <createTable tableName="invoice">
+            <column name="code" type="varchar(20)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="accounting">
+            <column autoIncrement="true" name="id" type="bigint">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="invoice_code" type="varchar(20)">
+                <constraints nullable="false" foreignKeyName="fk_invoice_code" references="invoice(code)" deleteCascade="true"/>
+            </column>
+            <column name="operation" type="varchar(255)"/>
+            <column name="debit" type="money"/>
+            <column name="credit" type="money" />
+        </createTable>
+    </changeSet>
 </databaseChangeLog>

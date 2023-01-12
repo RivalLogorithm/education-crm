@@ -10,4 +10,10 @@ public class PayContractDTO {
     private long contractNumber;
 
     private double paymentSum;
+
+    private double price;
+
+    private double nds;
+
+    private String provider;
 }

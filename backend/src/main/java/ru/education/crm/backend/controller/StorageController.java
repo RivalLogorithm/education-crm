@@ -1,5 +1,6 @@
 package ru.education.crm.backend.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.http.HttpStatus;
@@ -8,10 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import ru.education.crm.backend.dto.OrderDTO;
 import ru.education.crm.backend.dto.OrderDetailsDTO;
 import ru.education.crm.backend.dto.StorageDTO;
+import ru.education.crm.backend.entity.Payment;
 import ru.education.crm.backend.entity.PurchaseOrder;
 import ru.education.crm.backend.entity.Status;
 import ru.education.crm.backend.entity.StorageOperation;
 import ru.education.crm.backend.enums.ContractStatus;
+import ru.education.crm.backend.repository.PaymentRepository;
 import ru.education.crm.backend.repository.PurchaseOrderRepository;
 import ru.education.crm.backend.repository.StatusRepository;
 import ru.education.crm.backend.repository.StorageOperationsRepository;
@@ -22,16 +25,16 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/storage")
+@RequiredArgsConstructor
 public class StorageController {
 
-    @Autowired
-    private PurchaseOrderRepository purchaseOrderRepository;
+    private final PurchaseOrderRepository purchaseOrderRepository;
 
-    @Autowired
-    private StorageOperationsRepository storageOperationsRepository;
+    private final StorageOperationsRepository storageOperationsRepository;
 
-    @Autowired
-    private StatusRepository statusRepository;
+    private final StatusRepository statusRepository;
+
+    private final PaymentRepository paymentRepository;
 
     @GetMapping("/get")
     private ResponseEntity<List<OrderDTO>> getStorageList() {
@@ -65,6 +68,18 @@ public class StorageController {
 
         if (purchaseOrder.isPresent()) {
             StorageDTO response = new StorageDTO();
+            Optional<Payment> payment = paymentRepository.findByContract(purchaseOrder.get().getContract());
+            payment.ifPresent(p -> {
+                        if (purchaseOrder.get().getMaterial().equals("Материал 2") || purchaseOrder.get().getMaterial().equals("Материал 3")) {
+                            response.setPrice(p.getPaymentSum() / 1.2);
+                            response.setNds(p.getPaymentSum() / 1.2 * 0.2);
+                        } else {
+                            response.setPrice(p.getPaymentSum());
+                            response.setNds(0);
+                        }
+                    }
+            );
+
             response.setProvider(purchaseOrder.get().getProvider().getName());
             response.setDetails(purchaseOrder.get().getOrderDetails());
             response.setMaterial(purchaseOrder.get().getMaterial());

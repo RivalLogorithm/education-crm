@@ -18,6 +18,7 @@ export const AccountantNavbar = () => {
                 <ul id="nav-mobile" className="left hide-on-med-and-down">
                     <li><NavLink to="/">Главная</NavLink></li>
                     <li><NavLink to="/payment">Движение денежных средств для оплаты ТМЦ</NavLink></li>
+                    <li><NavLink to="/accounting">ОСВ Проводки</NavLink></li>
                     <li><a href="/" onClick={logoutHandler}>Выйти</a></li>
                 </ul>
             </div>
