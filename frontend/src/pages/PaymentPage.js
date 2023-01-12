@@ -73,7 +73,7 @@ export const PaymentPage = () => {
                             className="black-input"
                         />
                     </div>
-                    <label className="white-text">Номер договора</label>
+                    <label className="white-text">НДС</label>
                     <div className="input-field">
                         <input
                             disabled

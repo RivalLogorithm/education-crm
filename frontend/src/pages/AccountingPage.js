@@ -7,7 +7,7 @@ export const AccountingPage = () => {
 
     useEffect(() => {
         axios.get("/api/accounting/get")
-            .then(res => setAccounting(res))
+            .then(res => setAccounting(res.data))
             .catch(err => console.log(err))
     }, [])
     return (

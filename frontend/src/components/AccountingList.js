@@ -1,4 +1,5 @@
-export const AccountingList = (accounting) => {
+export const AccountingList = ({accounting}) => {
+    console.log(accounting.length)
     return (
         <table>
             <thead>

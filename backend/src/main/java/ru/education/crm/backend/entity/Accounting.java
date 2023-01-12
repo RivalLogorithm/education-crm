@@ -15,7 +15,7 @@ public class Accounting {
     private long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "code")
+    @JoinColumn(name = "invoice_code")
     private Invoice invoice;
 
     @Column(name = "operation")

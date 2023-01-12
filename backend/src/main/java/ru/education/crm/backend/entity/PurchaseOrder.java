@@ -43,8 +43,12 @@ public class PurchaseOrder {
 
     public PurchaseOrder(PurchaseOrderDTO purchaseOrderDTO) {
         this.material = purchaseOrderDTO.getMaterial();
+        if (purchaseOrderDTO.getMaterial().equals("Материал 2") || purchaseOrderDTO.getMaterial().equals("Материал 3")) {
+            this.price = purchaseOrderDTO.getPrice() * 1.2;
+        } else {
+            this.price = purchaseOrderDTO.getPrice();
+        }
         this.count = purchaseOrderDTO.getCount();
-        this.price = purchaseOrderDTO.getPrice();
         this.orderDetails = purchaseOrderDTO.getOrderDetails();
     }
 

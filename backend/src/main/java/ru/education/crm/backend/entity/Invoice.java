@@ -9,6 +9,7 @@ import javax.persistence.*;
 @Data
 public class Invoice {
 
+    @Id
     @Column(name = "code")
     private String code;
 
@@ -18,5 +19,8 @@ public class Invoice {
     public Invoice(String code, String name) {
         this.code = code;
         this.name = name;
+    }
+
+    public Invoice() {
     }
 }

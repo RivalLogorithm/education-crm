@@ -45,14 +45,17 @@ public class AccountingController {
 
         if (request.getDebit().equals("10")) {
             debitEntity.setDebit(request.getValue());
+            creditEntity.setCredit(-request.getValue());
         } else if (request.getDebit().equals("19")) {
-            debitEntity.setDebit(request.getAdditionalValue());
+            if (request.getAdditionalValue() == 0) {
+                return new ResponseEntity<>("НДС не добавлялся", HttpStatus.OK);
+            }
         } else {
             debitEntity.setDebit(request.getValue() + request.getAdditionalValue());
+            creditEntity.setCredit(-request.getValue() - request.getAdditionalValue());
         }
         debitEntity.setOperation(request.getOperation());
 
-        creditEntity.setCredit(-request.getValue() - request.getAdditionalValue());
         creditEntity.setOperation(request.getOperation());
 
         accountingRepository.save(debitEntity);

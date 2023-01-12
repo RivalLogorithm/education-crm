@@ -7,6 +7,7 @@ export const OrderDetailsList = (order) => {
         axios.put("/api/purchase_order/" + order.order.orderNumber)
             .then(() => {
                 window.alert("Заказ успешно подтвержден")
+                window.location.reload()
             })
     }
 
@@ -43,7 +44,7 @@ export const OrderDetailsList = (order) => {
                     <td>{order.order.paymentSum}</td>
                 </tr>
                 <tr>
-                    <td><b>Статус оплаты</b></td>
+                    <td><b>Статус заказа</b></td>
                     <td>{order.order.status}</td>
                 </tr>
                 <tr>
@@ -54,7 +55,7 @@ export const OrderDetailsList = (order) => {
             </table>
             <div>
                 <br/>
-                {order.order.storageStatus === "Проверено" &&
+                {order.order.storageStatus === "Проверено" && order.order.status === "Оплачено" &&
                     <button className="btn blue darken-1" onClick={approveHandler}>Подтвердить получение</button>
                 }
             </div>
