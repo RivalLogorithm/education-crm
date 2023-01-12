@@ -8,7 +8,10 @@ import lombok.Getter;
 public enum ContractStatus {
 
     CREATED(1L),
-    PAID(2L);
+    READY_TO_PAY(2L),
+    PAID(3L),
+    CHECKED(4L),
+    APPROVED(5L);
 
     private final long id;
 }

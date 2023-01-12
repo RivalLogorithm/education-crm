@@ -20,13 +20,17 @@ public class StorageOperation {
     @Column(name = "date")
     private LocalDate date;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "article")
     private Storage article;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_number")
     private PurchaseOrder orderNumber;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "status_id")
+    private Status status;
 
     public StorageOperation(long operationId, LocalDate date, Storage article, PurchaseOrder orderNumber) {
         this.operationId = operationId;

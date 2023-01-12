@@ -57,6 +57,7 @@ public class EmployeeController {
         if (employee.isPresent()) {
             BCrypt.Result result = BCrypt.verifyer().verify(employeeDTO.getPassword().toCharArray(), employee.get().getPassword());
             if (result.verified) {
+                log.info("Выполнен вход {}", employeeDTO.getEmail());
                 return new ResponseEntity<>(employee.get(), HttpStatus.OK);
             }
         }

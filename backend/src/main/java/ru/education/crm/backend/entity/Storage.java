@@ -1,12 +1,12 @@
 package ru.education.crm.backend.entity;
 
-import lombok.Builder;
+import lombok.Data;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "storage")
-@Builder
+@Data
 public class Storage {
 
     @Id

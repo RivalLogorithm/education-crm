@@ -37,6 +37,10 @@ public class PurchaseOrder {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "contract_number")
+    private Contract contract;
+
     public PurchaseOrder(PurchaseOrderDTO purchaseOrderDTO) {
         this.material = purchaseOrderDTO.getMaterial();
         this.count = purchaseOrderDTO.getCount();

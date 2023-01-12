@@ -1,11 +1,11 @@
 package ru.education.crm.backend.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class PayContractDTO {
+
+    private long orderNumber;
 
     private long contractNumber;
 

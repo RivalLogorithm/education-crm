@@ -29,7 +29,6 @@ export const AuthPage = () => {
         axios.post('api/employee/login', form)
             .then(res => {
                 auth.login(res.data.employeeId, res.data.department.departmentId)
-                window.alert("Вход выполнен успешно")
                 navigate('/')
             })
             .catch(err => {

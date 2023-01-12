@@ -9,7 +9,16 @@
             <column name="name" value="Создано"/>
         </insert>
         <insert tableName="status">
+            <column name="name" value="Передано на оплату"/>
+        </insert>
+        <insert tableName="status">
             <column name="name" value="Оплачено"/>
+        </insert>
+        <insert tableName="status">
+            <column name="name" value="Проверено"/>
+        </insert>
+        <insert tableName="status">
+            <column name="name" value="Подтверждено получение"/>
         </insert>
     </changeSet>
 

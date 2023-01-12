@@ -1,12 +1,12 @@
-import {OrdersList} from "../components/OrdersList";
+import {AccountantOrdersList} from "../components/AccountantOrdersList";
 import {useEffect, useState} from "react";
 import axios from "axios";
 
-export const PurchaseOrdersPage = () => {
+export const AccountantOrdersPage = () => {
     const [orders, setOrders] = useState([])
 
     useEffect(() => {
-        axios.get("/api/purchase_order/get_orders")
+        axios.get("/api/payment/get_orders")
             .then(res => setOrders(res.data))
             .catch(err => console.log(err))
     }, [])
@@ -14,7 +14,7 @@ export const PurchaseOrdersPage = () => {
     return (
         <div>
             <h2>Список заказов</h2>
-            {<OrdersList orders={orders}/>}
+            {<AccountantOrdersList orders={orders}/>}
         </div>
     )
 }

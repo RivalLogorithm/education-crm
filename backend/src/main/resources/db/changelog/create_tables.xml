@@ -149,4 +149,19 @@
         </addColumn>
     </changeSet>
 
+    <changeSet id="add_contract_number_into_purchase" author="sharshatov">
+        <addColumn tableName="purchase_order">
+            <column name="contract_number" type="bigint">
+                <constraints foreignKeyName="fk_contract_number" references="contract(contract_number)"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="add_status_into_storage_operation" author="sharshatov">
+        <addColumn tableName="storage_operation">
+            <column name="status_id" type="bigint">
+                <constraints foreignKeyName="fk_status_id" references="status(status_id)" deleteCascade="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>
