@@ -1,0 +1,22 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+		http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="insert_providers" author="sharshatov">
+        <insert tableName="provider">
+            <column name="name" value="Поставщик 1"/>
+            <column name="address" value="Адрес 1"/>
+        </insert>
+        <insert tableName="provider">
+            <column name="name" value="Поставщик 2"/>
+            <column name="address" value="Адрес 2"/>
+        </insert>
+        <insert tableName="provider">
+            <column name="name" value="Поставщик 3"/>
+            <column name="address" value="Адрес 3"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
